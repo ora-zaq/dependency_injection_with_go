@@ -46,12 +46,12 @@ func (lg LoggerAdapter) Log(message string) {
 
 type SimpleLogic struct {
 	l  Logger
-	ds DataStore
+	ds DataStore // インタフェースで受け取る。ビジネスロジックでは、どのデータストレージかに関しては関心を持たない
 }
 
 func (sl SimpleLogic) SayHello(userID string) (string, error) {
 	sl.l.Log("in SayHello for " + userID)
-	name, ok := sl.ds.UserNameForID(userID)
+	name, ok := sl.ds.UserNameForID(userID) // IDを指定して名前を返してくれさえすれば良い.どこからかに関しては関心がない
 	if !ok {
 		return "", errors.New("unknown user")
 	}
